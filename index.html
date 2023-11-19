@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RevolveAI Chat</title>
+
+    <style>
+        body {
+            background-color: #1c1c1c;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        #chat-container {
+            background-color: #212121;
+            width: 100%;
+            height: 100vh;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            color: #d9d9d9;
+        }
+
+        #title-box {
+            background-color: #333333;
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        #chat-history {
+            flex: 1;
+            overflow-y: auto;
+            margin-bottom: 10px;
+            padding-right: 10px;
+            overflow-x: hidden;
+        }
+
+        .message-container {
+            display: flex;
+            justify-content: flex-start;
+            margin-bottom: 10px;
+            max-width: 80%;
+            align-self: flex-start;
+        }
+
+        .user-message {
+            background-color: #404040;
+            color: #d9d9d9;
+            border-radius: 15px 15px 15px 0;
+        }
+
+        .revolveai-message {
+            background-color: #333333;
+            color: #d9d9d9;
+            border-radius: 15px 15px 0 15px;
+        }
+
+        .message {
+            padding: 15px;
+            word-wrap: break-word;
+        }
+
+        #user-input {
+            width: calc(100% - 16px);
+            padding: 15px;
+            border: 2px solid #666666;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            font-size: 16px;
+            color: #d9d9d9;
+            background-color: #333333;
+        }
+
+        #send-button {
+            width: calc(100% - 16px);
+            padding: 15px;
+            background-color: #666666;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        #send-button:hover {
+            background-color: #555555;
+        }
+
+        #footer-text {
+            text-align: center;
+            font-size: 14px;
+            color: #777;
+            margin-top: 10px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fadeIn {
+            animation: fadeIn 0.5s ease;
+        }
+    </style>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cursive&display=swap">
+</head>
+<body>
+    <<div id="chat-container">
+        <div id="title-box">
+            <h2 id="revolveai-title">RevolveAI Chat</h2>
+        </div>
+        <div id="chat-history"></div>
+        
+        <!-- Wrap input and button in a form element -->
+        <form id="chat-form" onsubmit="event.preventDefault(); sendMessage();">
+            <input type="text" id="user-input" placeholder="Type your message here..." onkeypress="handleKeyPress(event)">
+            <button type="submit" id="send-button">Send</button>
+        </form>
+
+        <p id="footer-text">Done by Shrijan and team.</p>
+    </div>
+
+    <script>
+        function sendMessage() {
+            const userInput = document.getElementById('user-input').value;
+            const chatHistory = document.getElementById('chat-history');
+            
+            const userMessage = document.createElement('div');
+            userMessage.className = 'message-container fadeIn';
+            userMessage.innerHTML = `<div class="message user-message">${userInput}</div>`;
+            
+            chatHistory.appendChild(userMessage);
+            document.getElementById('user-input').value = '';
+
+            const aiResponse = getAIResponse(userInput);
+            const revolveaiMessage = document.createElement('div');
+            revolveaiMessage.className = 'message-container fadeIn';
+            revolveaiMessage.innerHTML = `<div class="message revolveai-message">${aiResponse}</div>`;
+            
+            chatHistory.appendChild(revolveaiMessage);
+
+            chatHistory.scrollTop = chatHistory.scrollHeight;
+        }
+
+        function getAIResponse(userInput) {
+            return 'Hello, This is RevolveAI.';
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault(); // Prevent the form from submitting
+                sendMessage();
+            }
+        }
+    </script>
+
+</body>
+</html>
